@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kodadi Ad - Test Site</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header h1 { font-size: 22px; }
+    .header nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 24px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    .header nav a:hover { opacity: 1; text-decoration: underline; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .hero h2 { font-size: 42px; margin-bottom: 16px; }
+    .hero p { font-size: 18px; opacity: 0.8; max-width: 600px; margin: 0 auto 32px; }
+    .hero-btn {
+      display: inline-block;
+      padding: 14px 36px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+    .hero-btn:hover { transform: scale(1.05); }
+
+    /* Section */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 20px;
+    }
+    .section-title {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      text-align: center;
+      color: #666;
+      margin-bottom: 36px;
+    }
+
+    /* Products */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .product-img {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+    }
+    .product-info { padding: 16px; }
+    .product-info h3 { font-size: 18px; margin-bottom: 4px; }
+    .product-info .price { color: #667eea; font-weight: 700; font-size: 20px; }
+    .product-info .desc { color: #888; font-size: 14px; margin-top: 4px; }
+    .product-actions {
+      padding: 0 16px 16px;
+      display: flex;
+      gap: 8px;
+    }
+    .btn-primary, .btn-secondary {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn-primary { background: #667eea; color: white; }
+    .btn-primary:hover { background: #5a6fd6; }
+    .btn-secondary { background: #eee; color: #333; }
+    .btn-secondary:hover { background: #ddd; }
+
+    /* Ads */
+    .ad-banner {
+      border-radius: 12px;
+      padding: 32px;
+      margin: 24px 0;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .ad-banner h3 { font-size: 24px; margin-bottom: 8px; }
+    .ad-banner p { opacity: 0.9; margin-bottom: 16px; }
+    .ad-btn {
+      display: inline-block;
+      padding: 10px 28px;
+      background: white;
+      border-radius: 6px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .ad-btn:hover { transform: scale(1.05); }
+    .ad-label {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 10px;
+      background: rgba(0,0,0,0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .ad-1 { background: linear-gradient(135deg, #f093fb, #f5576c); }
+    .ad-1 .ad-btn { color: #f5576c; }
+    .ad-2 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+    .ad-2 .ad-btn { color: #4facfe; }
+    .ad-3 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+    .ad-3 .ad-btn { color: #38a169; }
+
+    /* Custom Tracking */
+    .tracking-panel {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .tracking-panel h3 { margin-bottom: 16px; }
+    .event-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .event-btn {
+      padding: 10px 20px;
+      border: 2px solid #667eea;
+      background: white;
+      color: #667eea;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    .event-btn:hover { background: #667eea; color: white; }
+    .event-log {
+      background: #1a1a2e;
+      color: #0f0;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      padding: 16px;
+      border-radius: 8px;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+    .event-log .log-entry { margin-bottom: 4px; }
+    .event-log .log-time { color: #888; }
+
+    /* Scroll sections */
+    .scroll-section {
+      background: white;
+      border-radius: 12px;
+      padding: 48px 32px;
+      margin: 24px 0;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .scroll-section h3 { font-size: 22px; margin-bottom: 12px; }
+    .scroll-section p { color: #666; max-width: 600px; margin: 0 auto; }
+
+    /* Footer */
+    .footer {
+      background: #1a1a2e;
+      color: #aaa;
+      text-align: center;
+      padding: 32px 20px;
+      font-size: 14px;
+      margin-top: 48px;
+    }
+    .footer a { color: #667eea; text-decoration: none; }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+    .modal h3 { margin-bottom: 12px; }
+    .modal p { color: #666; margin-bottom: 20px; }
+    .modal-close {
+      padding: 10px 24px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .filler { min-height: 400px; padding: 40px; background: white; border-radius: 12px; margin: 24px 0; }
+    .filler h3 { margin-bottom: 16px; }
+    .filler p { color: #666; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+  <!-- KODADI SDK -->
+  <script src="http://localhost:3000/sdk.js" data-api-key="cmn4gs3bi0001hgayj7lvb1u3"></script>
+  <script>
+    // Re-init with explicit endpoint and add debug logging
+    if (window.kodadi) {
+      kodadi.init({
+        apiKey: "cmn4gs3bi0001hgayj7lvb1u3",
+        endpoint: "http://localhost:3000"
+      });
+    }
+  </script>
+
+  <!-- Header -->
+  <header class="header">
+    <h1>🛒 TestShop</h1>
+    <nav>
+      <a href="#products">Products</a>
+      <a href="#ads">Deals</a>
+      <a href="#tracking">Track Events</a>
+      <a href="#more">More</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2>Welcome to the Test Shop</h2>
+    <p>This site is built to test Kodadi Ad analytics. Click around, scroll, and interact with products and ads to generate tracking events.</p>
+    <button class="hero-btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Browse Products</button>
+  </section>
+
+  <!-- Products Section -->
+  <section class="section" id="products">
+    <h2 class="section-title">Featured Products</h2>
+    <p class="section-sub">Click on products to trigger tracking events</p>
+    <div class="products-grid">
+
+      <div class="product-card" onclick="trackProductView('Wireless Headphones')">
+        <div class="product-img" style="background:#f0e6ff;">🎧</div>
+        <div class="product-info">
+          <h3>Wireless Headphones</h3>
+          <div class="price">$89.99</div>
+          <div class="desc">Noise-cancelling, 30h battery life</div>
+        </div>
+        <div class="product-actions">
+          <button class="btn-primary" onclick="event.stopPropagation(); trackProductInteraction('Wireless Headphones', 'add_to_cart')">Add to Cart</button>
+          <button class="btn-secondary" onclick="event.stopPropagation(); trackProductInteraction('Wireless Headphones', 'wishlist')">♡</button>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="trackProductView('Smart Watch')">
+        <div class="product-img" style="background:#e6f0ff;">⌚</div>
+        <div class="product-info">
+          <h3>Smart Watch</h3>
+          <div class="price">$199.99</div>
+          <div class="desc">Heart rate, GPS, waterproof</div>
+        </div>
+        <div class="product-actions">
+          <button class="btn-primary" onclick="event.stopPropagation(); trackProductInteraction('Smart Watch', 'add_to_cart')">Add to Cart</button>
+          <button class="btn-secondary" onclick="event.stopPropagation(); trackProductInteraction('Smart Watch', 'wishlist')">♡</button>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="trackProductView('Laptop Stand')">
+        <div class="product-img" style="background:#fff3e6;">💻</div>
+        <div class="product-info">
+          <h3>Laptop Stand</h3>
+          <div class="price">$49.99</div>
+          <div class="desc">Adjustable aluminum, foldable</div>
+        </div>
+        <div class="product-actions">
+          <button class="btn-primary" onclick="event.stopPropagation(); trackProductInteraction('Laptop Stand', 'add_to_cart')">Add to Cart</button>
+          <button class="btn-secondary" onclick="event.stopPropagation(); trackProductInteraction('Laptop Stand', 'wishlist')">♡</button>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="trackProductView('Mechanical Keyboard')">
+        <div class="product-img" style="background:#e6ffe6;">⌨️</div>
+        <div class="product-info">
+          <h3>Mechanical Keyboard</h3>
+          <div class="price">$129.99</div>
+          <div class="desc">RGB backlit, Cherry MX switches</div>
+        </div>
+        <div class="product-actions">
+          <button class="btn-primary" onclick="event.stopPropagation(); trackProductInteraction('Mechanical Keyboard', 'add_to_cart')">Add to Cart</button>
+          <button class="btn-secondary" onclick="event.stopPropagation(); trackProductInteraction('Mechanical Keyboard', 'wishlist')">♡</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Ad Banner 1 -->
+  <section class="section" id="ads">
+    <h2 class="section-title">Today's Deals</h2>
+    <p class="section-sub">Ads are tracked for views and clicks</p>
+
+    <div class="ad-banner ad-1" id="ad-summer-sale">
+      <span class="ad-label">Ad</span>
+      <h3>Summer Sale - 50% Off!</h3>
+      <p>Limited time offer on all electronics. Don't miss out!</p>
+      <a class="ad-btn" onclick="trackAdClick('Summer Sale - 50% Off!')">Shop Now →</a>
+    </div>
+
+    <div class="ad-banner ad-2" id="ad-free-shipping">
+      <span class="ad-label">Ad</span>
+      <h3>Free Shipping on Orders $50+</h3>
+      <p>No code needed. Applied automatically at checkout.</p>
+      <a class="ad-btn" onclick="trackAdClick('Free Shipping on Orders $50+')">Learn More →</a>
+    </div>
+
+    <div class="ad-banner ad-3" id="ad-new-arrivals">
+      <span class="ad-label">Ad</span>
+      <h3>New Arrivals Every Week</h3>
+      <p>Subscribe to get notified about the latest products.</p>
+      <a class="ad-btn" onclick="trackAdClick('New Arrivals Every Week')">Subscribe →</a>
+    </div>
+  </section>
+
+  <!-- Scroll Filler 1 -->
+  <section class="section">
+    <div class="scroll-section">
+      <h3>📈 Keep Scrolling</h3>
+      <p>Scroll events are tracked at 25%, 50%, 75%, and 100% milestones. Keep scrolling down to see more.</p>
+    </div>
+  </section>
+
+  <!-- Custom Tracking Panel -->
+  <section class="section" id="tracking">
+    <div class="tracking-panel">
+      <h3>🎯 Manual Event Tracking</h3>
+      <p style="color:#666; margin-bottom:16px;">Use these buttons to fire custom events via <code>kodadi.track()</code></p>
+      <div class="event-buttons">
+        <button class="event-btn" onclick="fireCustomEvent('newsletter_signup', {source: 'footer', plan: 'free'})">Newsletter Signup</button>
+        <button class="event-btn" onclick="fireCustomEvent('video_play', {video: 'demo', duration: 120})">Video Play</button>
+        <button class="event-btn" onclick="fireCustomEvent('form_submit', {form: 'contact', fields: 4})">Form Submit</button>
+        <button class="event-btn" onclick="fireCustomEvent('share', {platform: 'twitter', content: 'product'})">Share</button>
+        <button class="event-btn" onclick="fireCustomEvent('download', {file: 'catalog.pdf', size: '2.4mb'})">Download</button>
+        <button class="event-btn" onclick="fireCustomEvent('search', {query: 'headphones', results: 12})">Search</button>
+        <button class="event-btn" onclick="kodadi.flush()">Force Flush</button>
+      </div>
+      <h4 style="margin-bottom:8px;">Event Log:</h4>
+      <div class="event-log" id="eventLog">
+        <div class="log-entry"><span class="log-time">[ready]</span> Kodadi SDK loaded. Waiting for events...</div>
+        <div class="log-entry"><span class="log-time">[info]</span> API Key: cmn4gs3bi0001hgayj7lvb1u3</div>
+        <div class="log-entry"><span class="log-time">[info]</span> Endpoint: http://localhost:3000/api/track</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scroll Filler 2 -->
+  <section class="section">
+    <div class="filler" id="more">
+      <h3>Lorem Ipsum Content</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+      <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+    </div>
+  </section>
+
+  <!-- Scroll Filler 3 -->
+  <section class="section">
+    <div class="scroll-section">
+      <h3>Almost There!</h3>
+      <p>You're close to the bottom. Scroll all the way down to trigger the 100% scroll milestone.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Kodadi Ad Test Site &mdash; Built for SDK testing</p>
+    <p style="margin-top:8px;">Powered by <a href="#">Kodadi Ad Analytics</a></p>
+  </footer>
+
+  <!-- Product Modal -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal">
+      <h3 id="modalTitle">Product</h3>
+      <p id="modalDesc">You clicked on a product. A PRODUCT_VIEW event was fired.</p>
+      <button class="modal-close" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // --- Product tracking ---
+    function trackProductView(name) {
+      kodadi.track('PRODUCT_VIEW', { product: name, category: 'electronics' });
+      logEvent('PRODUCT_VIEW', { product: name });
+      document.getElementById('modalTitle').textContent = name;
+      document.getElementById('productModal').classList.add('active');
+    }
+
+    function trackProductInteraction(name, action) {
+      kodadi.track('PRODUCT_INTERACTION', { product: name, action: action });
+      logEvent('PRODUCT_INTERACTION', { product: name, action: action });
+    }
+
+    // Auto-track PRODUCT_VIEW when product cards scroll into view
+    var productObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var name = entry.target.querySelector('h3').textContent;
+          kodadi.track('PRODUCT_VIEW', { product: name, category: 'electronics' });
+          logEvent('PRODUCT_VIEW', { product: name });
+          productObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.product-card').forEach(function(card) {
+      productObserver.observe(card);
+    });
+
+    // --- Ad tracking ---
+    function trackAdClick(name) {
+      kodadi.track('AD_CLICK', { ad: name });
+      logEvent('AD_CLICK', { ad: name });
+    }
+
+    // Auto-track AD_VIEW when ads scroll into view
+    var adObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var adName = entry.target.querySelector('h3').textContent;
+          kodadi.track('AD_VIEW', { ad: adName });
+          logEvent('AD_VIEW', { ad: adName });
+          adObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.ad-banner').forEach(function(ad) {
+      adObserver.observe(ad);
+    });
+
+    // --- Custom events ---
+    function fireCustomEvent(name, data) {
+      kodadi.track('CUSTOM', Object.assign({ event: name }, data));
+      logEvent('CUSTOM', Object.assign({ event: name }, data));
+    }
+
+    // --- Event log ---
+    function logEvent(type, data) {
+      var log = document.getElementById('eventLog');
+      var time = new Date().toLocaleTimeString();
+      var entry = document.createElement('div');
+      entry.className = 'log-entry';
+      entry.innerHTML = '<span class="log-time">[' + time + ']</span> ' + type + ' ' + JSON.stringify(data);
+      log.appendChild(entry);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    // --- Modal ---
+    function closeModal() {
+      document.getElementById('productModal').classList.remove('active');
+    }
+    document.getElementById('productModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // --- Debug: Intercept fetch to /api/track ---
+    var _origFetch = window.fetch;
+    window.fetch = function(url, opts) {
+      if (typeof url === 'string' && url.indexOf('/api/track') !== -1) {
+        var log = document.getElementById('eventLog');
+        var time = new Date().toLocaleTimeString();
+        var entry = document.createElement('div');
+        entry.className = 'log-entry';
+        entry.innerHTML = '<span class="log-time">[' + time + ']</span> <span style="color:#ff0">Sending events to server...</span>';
+        log.appendChild(entry);
+
+        return _origFetch.apply(this, arguments).then(function(res) {
+          var e2 = document.createElement('div');
+          e2.className = 'log-entry';
+          if (res.ok) {
+            res.clone().json().then(function(data) {
+              e2.innerHTML = '<span class="log-time">[' + new Date().toLocaleTimeString() + ']</span> <span style="color:#0f0">OK ' + res.status + ' - ' + (data.count || 0) + ' events saved</span>';
+              log.appendChild(e2);
+              log.scrollTop = log.scrollHeight;
+            });
+          } else {
+            res.clone().text().then(function(text) {
+              e2.innerHTML = '<span class="log-time">[' + new Date().toLocaleTimeString() + ']</span> <span style="color:#f00">FAIL ' + res.status + ' - ' + text + '</span>';
+              log.appendChild(e2);
+              log.scrollTop = log.scrollHeight;
+            });
+          }
+          return res;
+        }).catch(function(err) {
+          var e3 = document.createElement('div');
+          e3.className = 'log-entry';
+          e3.innerHTML = '<span class="log-time">[' + new Date().toLocaleTimeString() + ']</span> <span style="color:#f00">NETWORK ERROR - ' + err.message + '</span>';
+          log.appendChild(e3);
+          log.scrollTop = log.scrollHeight;
+          throw err;
+        });
+      }
+      return _origFetch.apply(this, arguments);
+    };
+  </script>
+
+</body>
+</html>

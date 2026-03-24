@@ -1,0 +1,6 @@
+you need to create site to use "SDK.js" and Data_Api_Key
+
+site durduk yere hatalar gönderiyor bunların hepsi de events olarak gönderiliyor. bu gönderimin kapatılması
+ve hataların ayrıca gösterilmesi gerekiyor.
+
+Tıklama olayları ve diğer işlemler kolaylaştırıldı. API kısmını öğrenmek gerekiyor.
